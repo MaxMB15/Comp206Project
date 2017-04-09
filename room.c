@@ -96,16 +96,19 @@ void main ( int argc, char *argv[] ) {
 }
 
 
-void getInput(char *dest, int *i){
-    char c = getchar();
+void getInput(char *src, char *dest, int *i){
+    char c = ' ';
     //cut everything out until "="
     for(;c!='=';(*i)++)
-        c = getchar();
+        c = src[*i];
+    c = src[*i];
+    (*i)++;
+    
     //give dest all info until "&"
     int j = *i;
-    for(;c!='&'&&c!='\0';i++){
+    for(;c!='&'&&c!='\0';(*i)++){
         dest[*i-j] = c;
-        c = getchar();
+        c = src[*i];
     }
     dest[*i-j] = '\0';
 }
