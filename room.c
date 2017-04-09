@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <stdio.h>
 #include <string.h>
 
 void main ( int argc, char *argv[] ) {
@@ -30,20 +28,4 @@ void main ( int argc, char *argv[] ) {
 		else  i++; 
 	}
 	fclose(ressources);
-	char *poem;
-	if ( poemLength <= 10 ) {
-		printf(" Although we do believe in consiseness, there is a limit to how short a beautiful poem can be.  ");
-	}
-	time_t t; 
-  	/* Intializes random number generator */
-   	srand((unsigned) time(&t));
-	printf("   Random numbers generated: \n");
-	int r = rand()%10;
-	printf(" %d", r);
-	if (r == 9){
-		printf(" That was... truly beautiful! Take all your");	
-	}
-	else{
-		printf("Maybe you should ponder over your word choice a little more");
-	}
 }
