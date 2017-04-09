@@ -37,7 +37,13 @@ void main ( int argc, char *argv[] ) {
     char* command = (char*)(malloc(size));
     getInput(command,&i);
 
-    if(strcmp(toUpper(command),"PLAY"))
+    if(strcmp(toUpper(command),"PLAY")){
+        
+    }else if(strcmp(toUpper(command),"REFRESH"){
+        
+    }else if(strcmp(toUpper(command),"EXIT"){
+        
+    }else if(strcmp(toUpper(command),"DROP+")
 
     printf("Content-Type:text/html\n\n");
     printf("<html>\n"
@@ -117,6 +123,9 @@ void toUpper(char *string){
     for(i=0;i<strlen(string);i++){
         string[i] = toupper(string[i]);
     }
+}
+int beginsWith(char *begin, char *str){
+    
 }
            
            

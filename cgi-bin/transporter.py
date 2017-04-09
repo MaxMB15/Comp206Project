@@ -1,54 +1,55 @@
 import cgi, cgitb, webbrowser, urllib2
+from subprocess import call
 
 def transport():
-    """form = cgi.FieldStorage()
+    form = cgi.FieldStorage()
     inventoryVals = form.getvalue('inventory')
+    url = form.getvalue('url')
     # print inventoryVals
-    # inventoryAsList = inventoryVals.split(',')
-    mana = inventoryVals[0]
-    gold = inventoryVals[1]
-    mana = int (inventoryAsList[0])
-    gold = int (inventoryAsList[1])
-    if mana == 0:
-        print "Content-type: text/html"
-        print
-        print "<html><head>"
-        print "<>"
-        return """
-    url = 'http://www.cs.mcgill.ca/~sli144/room.html'
+    inventoryAsList = inventoryVals.split(',')
+    mana = inventoryAsList[0]
+    gold = inventoryAsList[1]
+    # mana = int (inventoryAsList[0])
+    # gold = int (inventoryAsList[1])
+
+    # url = 'http://www.cs.mcgill.ca/~sli144/room.html'
+    usrUrl = ''
     if url.endswith('room.html'):
         userUrl = url[:-9]
-    resourcesLoc = userUrl + "cgi-bin/resources.csv"
-    # resourcesLoc = "resources.csv"
+    resourcesLoc = 'http://cs.mcgill.ca/~mrunds/Game/resources.csv'
+    roomLoc = 'http://cs.mcgill.ca/~mrunds/Game/room.html'
     try:
-        # input_file = open(resourcesLoc, "r")
-        input_file = urllib2.urlopen(resourcesLoc)
+        input_file = open(resourcesLoc, "r")
         details = input_file.readlines()
-        details = details[0]
-        details = details.replace(" ", "")
-        print details
-        occupiedOrNot = details.split(',')
-        occupiedOrNot = int (occupiedOrNot[2])
+        detailsLine1 = details[0]
+        detailsLine1 = details.replace(" ", "")
+        print detailsLine1
+        resources = detailsLine1.split(',')
+        occupiedOrNot = int (resources[2])
         print occupiedOrNot
 
         if occupiedOrNot == 1:
-            print 'Occupied room!'
+            call([userUrl + "room.cgi"])
             return
+
         else:
-            print 'Unoccupied room! We can go in!'
-            html_file = urllib2.urlopen(url)
-            print "Content-type: text/html"
+            output_file = open(resourcesLoc, "w")
+            output_file.write(resources[0] + "," + resources[1] + "," + '1')
+            html_file = urllib2.urlopen(roomLoc)
+            print "Content-type:text/html\n\n"
             for line in html_file:
                 line = line + ''
                 if "inventory" not in line:
                     print line
                 else:
-                    mana = mana + ''
-                    gold = gold + ''
-                    print '<input type="hidden" name="inventory" value="%s,%s">' %mana %gold
-            
-            # webbrowser.open_new(url)
+                    # mana = mana + ''
+                    # gold = gold + ''
+                    print '<input type="hidden" name="inventory" value="%s,%s"></input>' %mana %gold
     
     except IOError:
         print 'Cannot open file'
-transport()
+        # call(["./room.cgi"])
+    
+    finally:
+        input_file.close()
+        output_file.close()
