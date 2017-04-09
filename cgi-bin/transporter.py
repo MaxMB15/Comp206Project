@@ -3,8 +3,12 @@ import cgi, cgitb, webbrowser, urllib2
 def transport():
     """form = cgi.FieldStorage()
     inventoryVals = form.getvalue('inventory')
-    inventoryAsList = inventoryVals.split(',')
+    # print inventoryVals
+    # inventoryAsList = inventoryVals.split(',')
+    mana = inventoryVals[0]
+    gold = inventoryVals[1]
     mana = int (inventoryAsList[0])
+    gold = int (inventoryAsList[1])
     if mana == 0:
         print "Content-type: text/html"
         print
@@ -13,8 +17,8 @@ def transport():
         return """
     url = 'http://www.cs.mcgill.ca/~sli144/room.html'
     if url.endswith('room.html'):
-        url = url[:-9]
-    resourcesLoc = url + "cgi-bin/resources.csv"
+        userUrl = url[:-9]
+    resourcesLoc = userUrl + "cgi-bin/resources.csv"
     # resourcesLoc = "resources.csv"
     try:
         # input_file = open(resourcesLoc, "r")
@@ -32,7 +36,18 @@ def transport():
             return
         else:
             print 'Unoccupied room! We can go in!'
-            webbrowser.open_new(url)
+            html_file = urllib2.urlopen(url)
+            print "Content-type: text/html"
+            for line in html_file:
+                line = line + ''
+                if "inventory" not in line:
+                    print line
+                else:
+                    mana = mana + ''
+                    gold = gold + ''
+                    print '<input type="hidden" name="inventory" value="%s,%s">' %mana %gold
+            
+            # webbrowser.open_new(url)
     
     except IOError:
         print 'Cannot open file'
