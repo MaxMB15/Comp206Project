@@ -1,11 +1,7 @@
 <html>
     <title>We Love Poems!</title>
     <body>
-        
         <center>
-            
-            
-            
             <div>
                 <h1>
                     <p><font color="white">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>
@@ -13,7 +9,7 @@
                 <!--PUT THIS IN:-->
                 <img src="src/room.jpg" width="40%">
                 <h1></h1>
-                <form action="cgi-bin/game.cgi" method="post">
+                <form action="cgi-bin/command.cgi" method="GET">
                     <input type="button" name="north" value="North"></input></br>
                     <input type="button" name="east" value="East"></input>
                     <input type="text" name="command"></input>
@@ -22,9 +18,6 @@
                     <!--teleport should edit this in:-->
                     <input type="hidden" name="inve" id="inv" value="666"></input>
                 </form>
-                    
-                
-                
             </div>
         </center>
     </body>
@@ -53,6 +46,5 @@
             font-size: 40px;
             text-align: center;
         }
-    
     </style>
 </html>
