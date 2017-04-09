@@ -39,7 +39,7 @@ void main ( int argc, char *argv[] ) {
 
     if(strcmp(toUpper(command),"PLAY"))
 
-        printf("Content-Type:test/html\n\n");
+    printf("Content-Type:text/html\n\n");
     printf("<html>\n"
            "<title>We Love Poems!</title>"
            "<body>\n"
