@@ -10,7 +10,7 @@ void getInput(char *dest, int *i){
         c = getchar();
     //give dest all info until "&"
     int j = *i;
-    for(;c!='&'&&c!='\0';i++){
+    for(;c!='&'&&c!='\n';i++){
         dest[*i-j] = c;
         c = getchar();
     }
@@ -18,11 +18,13 @@ void getInput(char *dest, int *i){
 }
 
 void main ( int argc, char *argv[] ) {
+    printf("1");
     int i = 0;
-    int size = atoi(getenv("CONTENT_LENGTH"));
-    char *command = (char*)malloc(size);
+    //int size = atoi(getenv("CONTENT_LENGTH"));
+    //printf("%d", size);
+    char *command = (char*)malloc(1000);
     getInput(command, &i);
-    char *poem = (char*)malloc(size);
+    char *poem = (char*)malloc(1000);
     getInput(poem, &i);
 	int poemLength = strlen(poem);
 	if ( poemLength <= 10 ) {
