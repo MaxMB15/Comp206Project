@@ -1,4 +1,4 @@
-import cgi, cgitb, webbrowser, urllib2
+import cgi, cgitb, urllib2
 from subprocess import call
 
 def transport():
@@ -53,3 +53,5 @@ def transport():
     finally:
         input_file.close()
         output_file.close()
+
+transport()
