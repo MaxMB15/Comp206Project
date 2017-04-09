@@ -7,7 +7,7 @@ void main ( int argc, char *argv[] ) {
 	int playerGold;
 	int playerMana;
 	int roomGold, roomMana;
-	FILE *resources = fopen("resources.csv", "r");
+	FILE *resources = fopen("resources.csv", "r+");
 	int i = 0;
 	int j = 1;
 	char valuables[7];
@@ -28,4 +28,6 @@ void main ( int argc, char *argv[] ) {
 		else  i++; 
 	}
 	fclose(ressources);
+    
+    
 }
