@@ -11,7 +11,7 @@ def success():
     # print occupiedOrNot
     # output_file = (resourcesLoc, "w")
     output_file = open("fromWeb.txt", "w")
-    output_file.write("hello")
+    # output_file.write("hello")
     output_file.write(resources[0] + "," + resources[1] + "," + '0')
     output_file.close()
 
