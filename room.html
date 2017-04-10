@@ -9,14 +9,37 @@
                 <!--PUT THIS IN:-->
                 <img src="src/room.jpg" width="40%">
                 <h1></h1>
-                <form action="cgi-bin/command.cgi" method="POST">
-                    <input type="button" name="north" value="North"></input></br>
-                    <input type="button" name="east" value="East"></input>
-                    <input type="text" name="command"></input>
-                    <input type="button" name="west" value="West"></input></br>
-                    <input type="button" name="south" value="South"></input>
+                <input type="submit" form="north" name="north" value="North"></input></br>
+                <input type="submit" form="east" name="east" value="East"></input>
+                <input type="text" form="text" name="command"></input>
+                <input type="submit" form="west" name="west" value="West"></input></br>
+                <input type="submit" form="south" name="south" value="South"></input>
                     <!--teleport should edit this in:-->
+                <input type="hidden" name="inve" value="6,6"></input>
+                <form action="cgi-bin/command.cgi" method="GET" id="text"></form>
+                <form action="cgi-bin/command.cgi" method="GET" id="north">
+                        <!--teleport should edit this in:-->
                     <input type="hidden" name="inve" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+                <form action="cgi-bin/command.cgi" method="GET" id="east">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inve" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+                <form action="cgi-bin/command.cgi" method="GET" id="west">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inve" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+                <form action="cgi-bin/command.cgi" method="GET" id="south">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inve" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
                 </form>
             </div>
         </center>
@@ -36,8 +59,11 @@
             font-family: Distant_Stroke;
             font-size: 30px;
         }
-        input[type=button] {
+        input[type=submit] {
             width: 20%;  height: 10%;
+            font-family: Distant_Stroke;
+            font-size: 40px;
+            text-align: center;
         }
         input[type=text] {
             padding: 0px;
