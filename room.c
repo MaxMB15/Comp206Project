@@ -3,6 +3,10 @@
 #include <string.h>
 
 void toUpper(char *string);
+int beginsWith(char *begin, char *str);
+void getInput(char *src, char *dest, int *i);
+void strcut(char *src, char *dest, int cutPlace);
+int isNum(char *src);
 
 void main ( int argc, char *argv[] ) {
 	int poemLength;
@@ -35,69 +39,98 @@ void main ( int argc, char *argv[] ) {
     //GET COMMANDS
     int i = 0;
     char* command = (char*)(malloc(size));
+    char* tempHolder = (char *)(malloc(20));
+    int commandError = 0;
     getInput(command,&i);
-
-    if(strcmp(toUpper(command),"PLAY")){
+    //Make everything uppercase
+    toUpper(command);
+    
+    
+    if(strcmp(command,"PLAY")){
         
-    }else if(strcmp(toUpper(command),"REFRESH"){
         
-    }else if(strcmp(toUpper(command),"EXIT"){
+    }else if(strcmp(command,"REFRESH"){
         
-    }else if(strcmp(toUpper(command),"DROP+")
+        
+    }else if(strcmp(command,"EXIT"){
+        
+        
+    }else if(beginsWith("DROP+",command){
+        strcut(command,tempHolder,strlen("DROP+"));
+        if(isNum(tempHolder){
+            int dropNum = atoi(tempHolder);
+            if(dropNum>playerGold){
+                //tried dropping more gold then what they had.
+                commandError = 5;
+            }
+            else{
+                playerMana+=dropNum/2;
+                playerGold-= dropNum;
+            }
+        }
+        else{
+            //not a number input
+            commandError = 2;
+        }
+    }
+    else{
+        //INVALID COMMAND
+        commandError = 1;
+    }
 
     printf("Content-Type:text/html\n\n");
     printf("<html>\n"
-           "<title>We Love Poems!</title>"
-           "<body>\n"
-           "<center>\n"
-           "<div>\n"
-           "<h1>\n"
-           "<p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n"
-           "</h1>\n"
-           "<!--PUT THIS IN:-->\n"
-           "<img src=\"src/room.jpg\" width=\"40%\">\n"
-           "<h1></h1>\n"
-           "<form action=\"cgi-bin/command.cgi\" method=\"post\">\n"
-           "<input type=\"button\" name=\"north\" value=\"North\"></input></br>\n"
-           "<input type=\"button\" name=\"east\" value=\"East\"></input>\n"
-           "<input type=\"text\" name=\"command\"></input>\n"
-           "<input type=\"button\" name=\"west\" value=\"West\"></input></br>\n"
-           "<input type=\"button\" name=\"south\" value=\"South\"></input>\n"
-           "<!--teleport should edit this in:-->\n"
-           "<input type=\"hidden\" name=\"inve\" id=\"inv\" value=\"666\"></input>\n"
-           "</form>\n"
-           "</div>\n"
-           "</center>\n"
-           "</body>\n"
-           "<style>\n"
-           "@font-face {\n"
-           "    font-family: Distant_Stroke;\n"
-           "src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n"
-           "}\n"
-           "body {\n"
-           "height: 100%;\n"
-           "margin: 0;\n"
-           "padding: 0;\n"
-           "    background-color: #FFCC00;\n"
-           "background: url(\"src/bg.jpg\");\n"
-           "    background-size: 100% 100%;\n"
-           "    font-family: Distant_Stroke;\n"
-           "    font-size: 30px;\n"
-           "}\n"
-           "input[type=button] {\n"
-           "width: 20%;  height: 10%;\n"
-           "}\n"
-           "input[type=text] {\n"
-           "padding: 0px;\n"
-           "width: 20%;  height: 7%;\n"
-           "    font-family: Distant_Stroke;\n"
-           "    font-size: 40px;\n"
-           "    text-align: center;\n"
-           "}\n"
-           "</style>\n"
-           "</html>");\n"
-        "}\n"
+           "    <title>We Love Poems!</title>"
+           "    <body>\n"
+           "        <center>\n"
+           "            <div>\n"
+           "                <h1>\n"
+           "                    <p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n"
+           "                </h1>\n"
+           "                        <!--PUT THIS IN:-->\n"
+           "                <img src=\"src/room.jpg\" width=\"40%\">\n"
+           "                <h1></h1>\n"
+           "                <form action=\"cgi-bin/command.cgi\" method=\"post\">\n"
+           "                    <input type=\"button\" name=\"north\" value=\"North\"></input></br>\n"
+           "                        <input type=\"button\" name=\"east\" value=\"East\"></input>\n"
+           "                        <input type=\"text\" name=\"command\"></input>\n"
+           "                        <input type=\"button\" name=\"west\" value=\"West\"></input></br>\n"
+           "                        <input type=\"button\" name=\"south\" value=\"South\"></input>\n"
+           "                                        <!--teleport should edit this in:-->\n"
+           "                        <input type=\"hidden\" name=\"inve\" id=\"inv\" value=\"666\"></input>\n"
+           "                </form>\n"
+           "            </div>\n"
+           "        </center>\n"
+           "    </body>\n"
+           "    <style>\n"
+           "        @font-face {\n"
+           "            font-family: Distant_Stroke;\n"
+           "            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n"
+           "        }\n"
+           "        body {\n"
+           "            height: 100%;\n"
+           "            margin: 0;\n"
+           "            padding: 0;\n"
+           "            background-color: #FFCC00;\n"
+           "            background: url(\"src/bg.jpg\");\n"
+           "            background-size: 100% 100%;\n"
+           "            font-family: Distant_Stroke;\n"
+           "            font-size: 30px;\n"
+           "        }\n"
+           "        input[type=button] {\n"
+           "            width: 20%;  height: 10%;\n"
+           "        }\n"
+           "        input[type=text] {\n"
+           "            padding: 0px;\n"
+           "            width: 20%;  height: 7%;\n"
+           "            font-family: Distant_Stroke;\n"
+           "            font-size: 40px;\n"
+           "            text-align: center;\n"
+           "        }\n"
+           "    </style>\n"
+           "</html>"
     );
+           
     return 0;
 }
 
@@ -125,7 +158,33 @@ void toUpper(char *string){
     }
 }
 int beginsWith(char *begin, char *str){
-    
+    if(strlen(begin)>strlen(str)){
+        return 1;
+    }
+    int i;
+    for(i = 0;i<strlen(begin);i++){
+        if(begin[i]!=str[i]){
+            return 1;
+        }
+    }
+    return 0;
+}
+//takes the upper part after cutPlace
+void strcut(char *src, char *dest, int cutPlace){
+    int i;
+    for(i=cutPlace;i<strlen(src);i++){
+        dest[i-cutPlace] = src[i];
+    }
+    dest[i-cutPlace]='\n';
+}
+int isNum(char *src){
+    int i;
+    for(i=0;i<strlen(src);i++){
+        if(src[i]<'0'||src[i]>'9'){
+            return 1;
+        }
+    }
+    return 0;
 }
            
            
