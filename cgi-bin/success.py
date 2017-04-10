@@ -15,3 +15,9 @@ def success():
     
     except IOError:
         print 'Cannot open file'
+
+    finally:
+	input_file.close()
+	output_file.close()
+
+success()
