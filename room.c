@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 void toUpper(char *string);
 int beginsWith(char *begin, char *str);
@@ -8,40 +9,43 @@ void getInput(char *src, char *dest, int *i);
 void strcut(char *src, char *dest, int cutPlace);
 int isNum(char *src);
 
-void main ( int argc, char *argv[] ) {
-	int poemLength;
-	int playerGold;
-	int playerMana;
-	int roomGold, roomMana;
-	FILE *resources = fopen("resources.csv", "r+");
-	int i = 0;
-	int j = 1;
-	char valuables[7];
-	while (!feof(resources)) {
-		char c = getc(resources);
-		temp[i] = c;
-		if (c == ',') {
-			valuables[i] = '\0';
-			if (j == 2) {
-				roomMana = atoi(valuables);	
-			} 
-			else if (j == 1) {
-				roomGold = atoi(valuables);
-			}
-			j++;
-			i = 0;
-		} 
-		else  i++; 
-	}
-	fclose(ressources);
+int main ( int argc, char *argv[] ) {
+    int playerGold;
+    int playerMana;
+    int roomGold, roomMana;
+    FILE *resources = fopen("resources.csv", "r+");
+    int i = 0;
+    int j = 1;
+    char valuables[7];
+    while (!feof(resources)) {
+        char c = getc(resources);
+        valuables[i] = c;
+        if (c == ',') {
+            valuables[i] = '\0';
+            if (j == 2) {
+                roomMana = atoi(valuables);
+            }
+            else if (j == 1) {
+                roomGold = atoi(valuables);
+            }
+            j++;
+            i = 0;
+        }
+        else  i++;
+    }
+    fclose(resources);
+    
+    
     //size of content given by web page
     int size = atoi(getenv("CONTENT_LENGTH"));
     //GET COMMANDS
-    int i = 0;
+    i = 0;
+    char* input = (char*)(malloc(size));
+    scanf("%s",input);
     char* command = (char*)(malloc(size));
     char* tempHolder = (char *)(malloc(20));
     int commandError = 0;
-    getInput(command,&i);
+    getInput(input,command,&i);
     //Make everything uppercase
     toUpper(command);
     
@@ -49,15 +53,15 @@ void main ( int argc, char *argv[] ) {
     if(strcmp(command,"PLAY")){
         
         
-    }else if(strcmp(command,"REFRESH"){
+    }else if(strcmp(command,"REFRESH")){
         
         
-    }else if(strcmp(command,"EXIT"){
+    }else if(strcmp(command,"EXIT")){
         
         
-    }else if(beginsWith("DROP+",command){
+    }else if(beginsWith("DROP+",command)){
         strcut(command,tempHolder,strlen("DROP+"));
-        if(isNum(tempHolder){
+        if(isNum(tempHolder)){
             int dropNum = atoi(tempHolder);
             if(dropNum>playerGold){
                 //tried dropping more gold then what they had.
@@ -77,7 +81,7 @@ void main ( int argc, char *argv[] ) {
         //INVALID COMMAND
         commandError = 1;
     }
-
+    
     printf("Content-Type:text/html\n\n");
     printf("<html>\n"
            "    <title>We Love Poems!</title>"
@@ -129,8 +133,8 @@ void main ( int argc, char *argv[] ) {
            "        }\n"
            "    </style>\n"
            "</html>"
-    );
-           
+           );
+    
     return 0;
 }
 
@@ -186,6 +190,3 @@ int isNum(char *src){
     }
     return 0;
 }
-           
-           
-
