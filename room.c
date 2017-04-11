@@ -38,7 +38,7 @@ int main ( int argc, char *argv[] ) {
     
     //size of content given by web page
     int size = atoi(getenv("CONTENT_LENGTH"));
-    //GET COMMANDS
+    //get COMMANDS
     i = 0;
     char* input = (char*)(malloc(size));
     scanf("%s",input);
@@ -49,15 +49,16 @@ int main ( int argc, char *argv[] ) {
     //Make everything uppercase
     toUpper(command);
     
+    int code = 0;
     
     if(strcmp(command,"PLAY")){
-        
+        code = 1;
         
     }else if(strcmp(command,"REFRESH")){
-        
+        code = 2;
         
     }else if(strcmp(command,"EXIT")){
-        
+        code = 3;
         
     }else if(beginsWith("DROP+",command)){
         strcut(command,tempHolder,strlen("DROP+"));
@@ -70,6 +71,7 @@ int main ( int argc, char *argv[] ) {
             else{
                 playerMana+=dropNum/2;
                 playerGold-= dropNum;
+                code = 4;
             }
         }
         else{
@@ -84,26 +86,62 @@ int main ( int argc, char *argv[] ) {
     
     printf("Content-Type:text/html\n\n");
     printf("<html>\n"
-           "    <title>We Love Poems!</title>"
+           "    <title>We Love Poems!</title>\n"
            "    <body>\n"
            "        <center>\n"
            "            <div>\n"
            "                <h1>\n"
            "                    <p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n"
            "                </h1>\n"
-           "                        <!--PUT THIS IN:-->\n"
-           "                <img src=\"src/room.jpg\" width=\"40%\">\n"
+           "                <!--PUT THIS IN:-->\n"
+           "                <img src=\"src/room.jpg\" width=\"40%%\">\n"
            "                <h1></h1>\n"
-           "                <form action=\"cgi-bin/command.cgi\" method=\"post\">\n"
-           "                    <input type=\"button\" name=\"north\" value=\"North\"></input></br>\n"
-           "                        <input type=\"button\" name=\"east\" value=\"East\"></input>\n"
-           "                        <input type=\"text\" name=\"command\"></input>\n"
-           "                        <input type=\"button\" name=\"west\" value=\"West\"></input></br>\n"
-           "                        <input type=\"button\" name=\"south\" value=\"South\"></input>\n"
-           "                                        <!--teleport should edit this in:-->\n"
-           "                        <input type=\"hidden\" name=\"inve\" id=\"inv\" value=\"666\"></input>\n"
-           "                </form>\n"
-           "            </div>\n"
+           );
+    //play game code
+    if(code == 1){
+        printf("                <input type=\"text\" form=\"text\" name=\"command\"></input>\n"
+               "               <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"text\"></form>\n"
+               "                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n"
+               "                    <textarea form=\"poemText\" name=\"peom\" value=\"\"></textarea></br></br>\n"
+               "                    <input type=\"submit\"></input>\n"
+               "                </form>\n"
+               );
+    }
+    else{
+        printf("                <input type=\"submit\" form=\"north\" name=\"north\" value=\"North\"></input></br>\n"
+               "                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input>\n"
+               "                <input type=\"text\" form=\"text\" name=\"command\"></input>\n"
+               "                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input></br>\n"
+               "                <input type=\"submit\" form=\"south\" name=\"south\" value=\"South\"></input>\n"
+               "                    <!--teleport should edit this in:-->\n"
+               "                <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
+               "                <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"text\"></form>\n"
+               "                <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"north\">\n"
+               "                        <!--teleport should edit this in:-->\n"
+               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
+               "                                    <!--edit this to the other sites transporter.py file:-->\n"
+               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
+               "                </form>\n"
+               "                <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"east\">\n"
+               "                        <!--teleport should edit this in:-->\n"
+               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
+               "                                    <!--edit this to the other sites transporter.py file:-->\n"
+               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
+               "                </form>\n"
+               "                <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"west\">\n"
+               "                        <!--teleport should edit this in:-->\n"
+               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
+               "                                    <!--edit this to the other sites transporter.py file:-->\n"
+               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
+               "                </form>\n"
+               "                <form action=\"cgi-bin/command.cgi\" method=\"POST\" id=\"south\">\n"
+               "                        <!--teleport should edit this in:-->\n"
+               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
+               "                                    <!--edit this to the other sites transporter.py file:-->\n"
+               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
+               "                </form>\n"
+               );}
+    printf("            </div>\n"
            "        </center>\n"
            "    </body>\n"
            "    <style>\n"
@@ -112,27 +150,41 @@ int main ( int argc, char *argv[] ) {
            "            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n"
            "        }\n"
            "        body {\n"
-           "            height: 100%;\n"
+           "            height: 100%%;\n"
            "            margin: 0;\n"
            "            padding: 0;\n"
            "            background-color: #FFCC00;\n"
            "            background: url(\"src/bg.jpg\");\n"
-           "            background-size: 100% 100%;\n"
+           "            background-size: 100%% 100%%;\n"
            "            font-family: Distant_Stroke;\n"
            "            font-size: 30px;\n"
            "        }\n"
-           "        input[type=button] {\n"
-           "            width: 20%;  height: 10%;\n"
-           "        }\n"
-           "        input[type=text] {\n"
-           "            padding: 0px;\n"
-           "            width: 20%;  height: 7%;\n"
+           "        input[type=submit] {\n"
+           "            width: 20%%;  height: 10%%;\n"
            "            font-family: Distant_Stroke;\n"
            "            font-size: 40px;\n"
            "            text-align: center;\n"
            "        }\n"
-           "    </style>\n"
-           "</html>"
+           "        input[type=text] {\n"
+           "            padding: 0px;\n"
+           "            width: 20%%;  height: 7%%;\n"
+           "            font-family: Distant_Stroke;\n"
+           "            font-size: 40px;\n"
+           "            text-align: center;\n"
+           "        }\n"
+           );
+    //play game code
+    if(code==1){
+        printf("        textarea {\n"
+               "            height: 40%%;\n"
+               "            width: 40%%;\n"
+               "            margin: 0;\n"
+               "            padding: 20px;\n"
+               "        }\n"
+               );
+    }
+    printf("    </style>\n"
+           "</html>\n"
            );
     
     return 0;
@@ -190,3 +242,6 @@ int isNum(char *src){
     }
     return 0;
 }
+
+
+
