@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+void getInv(char *data, int *mana, int *gold);
+char getFromLoc(char *data);
 void toUpper(char *string);
 int beginsWith(char *begin, char *str);
 void getInput(char *src, char *dest, int *i);
@@ -10,38 +12,24 @@ void strcut(char *src, char *dest, int cutPlace);
 int isNum(char *src);
 
 int main ( int argc, char *argv[] ) {
-    int playerGold;
-    int playerMana;
+    //get room resources
     int roomGold, roomMana;
-    FILE *resources = fopen("resources.csv", "r+");
+    FILE *resources = fopen("resources.csv", "r");
     int i = 0;
-    int j = 1;
-    char valuables[7];
-    while (!feof(resources)) {
-        char c = getc(resources);
-        valuables[i] = c;
-        if (c == ',') {
-            valuables[i] = '\0';
-            if (j == 2) {
-                roomMana = atoi(valuables);
-            }
-            else if (j == 1) {
-                roomGold = atoi(valuables);
-            }
-            j++;
-            i = 0;
-        }
-        else  i++;
-    }
+    char *roomResources = (char *)(malloc(40));
+    fscanf(resources,"%s",roomResources);
     fclose(resources);
-    
+    getInv(roomResources, &roomMana, &roomGold);
     
     //size of content given by web page
     int size = atoi(getenv("CONTENT_LENGTH"));
-    //get COMMANDS
-    i = 0;
+    
+    //Get data
     char* input = (char*)(malloc(size));
     scanf("%s",input);
+    
+    //get commands
+    i = 0;
     char* command = (char*)(malloc(size));
     char* tempHolder = (char *)(malloc(20));
     int commandError = 0;
@@ -49,20 +37,70 @@ int main ( int argc, char *argv[] ) {
     //Make everything uppercase
     toUpper(command);
     
-    int code = 0;
+    //get inventory
+    char* inv = (char*)(malloc(size));
+    getInput(input,inv,&i);
+    int playerMana = 0;
+    int playerGold = 0;
+    getInv(inv, &playerMana, &playerGold);
     
-    if(strcmp(command,"PLAY")){
+    //Make sure location comes from room page
+    //normal char is c
+    //game char is i
+    char location = getFromLoc(input);
+    if(location=='i'){
+        strcpy(command, "PLAY");
+        commandError = 1;
+    }
+    
+    //Handle commands
+    if(!strcmp(command,"EXIT")){
+        resources = fopen("resources.csv", "w");
+        fprintf(resources,"%d,%d,0",roomMana, roomGold);
+        fclose(resources);
+        
+        printf("Content-Type:text/html\n\n");
+        printf("<html>\n");
+        printf("    <title>We Love Poems!</title>\n");
+        printf("    <body>\n");
+        printf("        <center>\n");
+        printf("            <div>\n");
+        printf("                <h1>\n");
+        printf("                    <p><font color=\"white\">We are sorry that you wanted to leave.</font></p>\n");
+        printf("                </h1>\n");
+        printf("            </div>\n");
+        printf("        </center>\n");
+        printf("    </body>\n");
+        printf("    <style>\n");
+        printf("        @font-face {\n");
+        printf("            font-family: Distant_Stroke;\n");
+        printf("            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n");
+        printf("        }\n");
+        printf("        body {\n");
+        printf("            height: 100%%;\n");
+        printf("            margin: 0;\n");
+        printf("            padding: 0;\n");
+        printf("            background-color: #FFCC00;\n");
+        printf("            background: url(\"src/bg.jpg\");\n");
+        printf("            background-size: 100%% 100%%;\n");
+        printf("            font-family: Distant_Stroke;\n");
+        printf("            font-size: 30px;\n");
+        printf("        }\n");
+        printf("    </style>\n");
+        printf("</html>\n");
+        return 0;
+    }
+    
+    int code = 0;
+    if(!strcmp(command,"PLAY")){
         code = 1;
         
-    }else if(strcmp(command,"REFRESH")){
+    }else if(!strcmp(command,"REFRESH")){
         code = 2;
         
-    }else if(strcmp(command,"EXIT")){
-        code = 3;
-        
-    }else if(beginsWith("DROP+",command)){
+    }else if(!beginsWith("DROP+",command)){
         strcut(command,tempHolder,strlen("DROP+"));
-        if(isNum(tempHolder)){
+        if(!isNum(tempHolder)){
             int dropNum = atoi(tempHolder);
             if(dropNum>playerGold){
                 //tried dropping more gold then what they had.
@@ -84,113 +122,179 @@ int main ( int argc, char *argv[] ) {
         commandError = 1;
     }
     
+    
+    
+    
     printf("Content-Type:text/html\n\n");
-    printf("<html>\n"
-           "    <title>We Love Poems!</title>\n"
-           "    <body>\n"
-           "        <center>\n"
-           "            <div>\n"
-           "                <h1>\n"
-           "                    <p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n"
-           "                </h1>\n"
-           "                <!--PUT THIS IN:-->\n"
-           "                <img src=\"../src/room.jpg\" width=\"40%%\">\n"
-           "                <h1></h1>\n"
-           );
+    printf("<html>\n");
+    printf("    <title>We Love Poems!</title>\n");
+    printf("    <body>\n");
+    printf("        <center>\n");
+    printf("            <div>\n");
+    printf("                <h1>\n");
+    printf("                    <p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n");
+    printf("                </h1>\n");
+    printf("                <img src=\"src/room.jpg\" width=\"40%%\">\n");
+    
+    //Error codes
+    if(commandError == 1)
+        printf("                <h1>This is an invalid command.</h1>\n");
+    else if(commandError == 2)
+        printf("                <h1>Drop number not valid.</h1>\n");
+    else if(commandError == 5)
+        printf("                <h1>Not enough gold to drop.</h1>\n");
+    else if(code == 4)
+        printf("                <h1>You now have %d manna and %d gold.</h1>\n",playerMana, playerGold);
+    else
+        printf("                <h1></h1>\n");
+    
+    
     //play game code
     if(code == 1){
-        printf("                <input type=\"text\" form=\"text\" name=\"command\"></input>\n"
-               "               <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"text\"></form>\n"
-               "                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n"
-               "                    <textarea form=\"poemText\" name=\"peom\" value=\"\"></textarea></br></br>\n"
-               "                    <input type=\"submit\"></input>\n"
-               "                </form>\n"
-               );
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"text\"></form>\n");
+        printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
+        printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
+        printf("                    <textarea form=\"poemText\" name=\"peom\" value=\"\"></textarea></br></br>\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                    <input type=\"submit\"></input>\n");
+        printf("                </form>\n");
     }
     else{
-        printf("                <input type=\"submit\" form=\"north\" name=\"north\" value=\"North\"></input></br>\n"
-               "                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input>\n"
-               "                <input type=\"text\" form=\"text\" name=\"command\"></input>\n"
-               "                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input></br>\n"
-               "                <input type=\"submit\" form=\"south\" name=\"south\" value=\"South\"></input>\n"
-               "                    <!--teleport should edit this in:-->\n"
-               "                <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
-               "                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"text\"></form>\n"
-               "                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"north\">\n"
-               "                        <!--teleport should edit this in:-->\n"
-               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
-               "                                    <!--edit this to the other sites transporter.py file:-->\n"
-               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
-               "                </form>\n"
-               "                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"east\">\n"
-               "                        <!--teleport should edit this in:-->\n"
-               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
-               "                                    <!--edit this to the other sites transporter.py file:-->\n"
-               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
-               "                </form>\n"
-               "                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"west\">\n"
-               "                        <!--teleport should edit this in:-->\n"
-               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
-               "                                    <!--edit this to the other sites transporter.py file:-->\n"
-               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
-               "                </form>\n"
-               "                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"south\">\n"
-               "                        <!--teleport should edit this in:-->\n"
-               "                    <input type=\"hidden\" name=\"inve\" value=\"6,6\"></input>\n"
-               "                                    <!--edit this to the other sites transporter.py file:-->\n"
-               "                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n"
-               "                </form>\n"
-               );}
-    printf("            </div>\n"
-           "        </center>\n"
-           "    </body>\n"
-           "    <style>\n"
-           "        @font-face {\n"
-           "            font-family: Distant_Stroke;\n"
-           "            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n"
-           "        }\n"
-           "        body {\n"
-           "            height: 100%%;\n"
-           "            margin: 0;\n"
-           "            padding: 0;\n"
-           "            background-color: #FFCC00;\n"
-           "            background: url(\"../src/bg.jpg\");\n"
-           "            background-size: 100%% 100%%;\n"
-           "            font-family: Distant_Stroke;\n"
-           "            font-size: 30px;\n"
-           "        }\n"
-           "        input[type=submit] {\n"
-           "            width: 20%%;  height: 10%%;\n"
-           "            font-family: Distant_Stroke;\n"
-           "            font-size: 40px;\n"
-           "            text-align: center;\n"
-           "        }\n"
-           "        input[type=text] {\n"
-           "            padding: 0px;\n"
-           "            width: 20%%;  height: 7%%;\n"
-           "            font-family: Distant_Stroke;\n"
-           "            font-size: 40px;\n"
-           "            text-align: center;\n"
-           "        }\n"
-           );
+        printf("                <input type=\"submit\" form=\"north\" name=\"north\" value=\"North\"></input></br>\n");
+        printf("                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input>\n");
+        printf("                <input type=\"text\" form=\"text\" name=\"command\"></input>\n");
+        printf("                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input></br>\n");
+        printf("                <input type=\"submit\" form=\"south\" name=\"south\" value=\"South\"></input>\n");
+        printf("                <input type=\"hidden\" name=\"inventory\" value=\"6,6\"></input>\n");
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"text\"></form>\n");
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"north\">\n");
+        printf("                        <!--teleport should edit this in:-->\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                </form>\n");
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"east\">\n");
+        printf("                        <!--teleport should edit this in:-->\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                </form>\n");
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"west\">\n");
+        printf("                        <!--teleport should edit this in:-->\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                </form>\n");
+        printf("                <form action=\"cgi-bin/room.cgi\" method=\"POST\" id=\"south\">\n");
+        printf("                        <!--teleport should edit this in:-->\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                </form>\n");
+    }
+    
+    
+    printf("            </div>\n");
+    printf("        </center>\n");
+    printf("    </body>\n");
+    printf("    <style>\n");
+    printf("        @font-face {\n");
+    printf("            font-family: Distant_Stroke;\n");
+    printf("            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n");
+    printf("        }\n");
+    printf("        body {\n");
+    printf("            height: 100%%;\n");
+    printf("            margin: 0;\n");
+    printf("            padding: 0;\n");
+    printf("            background-color: #FFCC00;\n");
+    printf("            background: url(\"src/bg.jpg\");\n");
+    printf("            background-size: 100%% 100%%;\n");
+    printf("            font-family: Distant_Stroke;\n");
+    printf("            font-size: 30px;\n");
+    printf("        }\n");
+    printf("        input[type=submit] {\n");
+    printf("            width: 20%%;  height: 10%%;\n");
+    printf("            font-family: Distant_Stroke;\n");
+    printf("            font-size: 40px;\n");
+    printf("            text-align: center;\n");
+    printf("        }\n");
+    printf("        input[type=text] {\n");
+    printf("            padding: 0px;\n");
+    printf("            width: 20%%;  height: 7%%;\n");
+    printf("            font-family: Distant_Stroke;\n");
+    printf("            font-size: 40px;\n");
+    printf("            text-align: center;\n");
+    printf("        }\n");
+    
     //play game code
     if(code==1){
-        printf("        textarea {\n"
-               "            height: 40%%;\n"
-               "            width: 40%%;\n"
-               "            margin: 0;\n"
-               "            padding: 20px;\n"
-               "        }\n"
-               );
+        printf("        textarea {\n");
+        printf("            height: 40%%;\n");
+        printf("            width: 40%%;\n");
+        printf("            margin: 0;\n");
+        printf("            padding: 20px;\n");
+        printf("        }\n");
     }
-    printf("    </style>\n"
-           "</html>\n"
-           );
+    printf("    </style>\n");
+    printf("</html>\n");
+    
+    free(inv);
+    free(input);
+    free(command);
+    free(tempHolder);
     
     return 0;
 }
 
 
+char getFromLoc(char *data){
+    //search for '?'
+    int i;
+    for(i=0;i<strlen(data);i++){
+        if(data[i]=='?'){
+            return data[i+1];
+        }
+    }
+    return '\n';
+}
+void getInv(char *data, int *mana, int *gold){
+    //parse through data
+    char *buffer = (char *)(malloc(20));
+    int afterComma = 0;
+    int i, j = 0;
+    for(i=0;i<strlen(data);i++){
+        //search for comma
+        if(data[i]=='%'&&data[i+1]=='2'&&data[i+2]=='C'){
+            if(afterComma)
+                break;
+            afterComma = 1;
+            buffer[i] = '\0';
+            *mana = atoi(buffer);
+            i+=2;
+            j = i+1;
+            continue;
+        }
+        else if(data[i]==','){
+            if(afterComma)
+                break;
+            afterComma = 1;
+            buffer[i] = '\0';
+            *mana = atoi(buffer);
+            j = i+1;
+            continue;
+        }
+        if(!afterComma){
+            buffer[i] = data[i];
+        }
+        else{
+            buffer[i-j] = data[i];
+        }
+    }
+    buffer[i-j] = '\0';
+    *gold = atoi(buffer);
+    free(buffer);
+    
+}
 void getInput(char *src, char *dest, int *i){
     char c = ' ';
     //cut everything out until "="
@@ -231,7 +335,7 @@ void strcut(char *src, char *dest, int cutPlace){
     for(i=cutPlace;i<strlen(src);i++){
         dest[i-cutPlace] = src[i];
     }
-    dest[i-cutPlace]='\n';
+    dest[i-cutPlace]='\0';
 }
 int isNum(char *src){
     int i;

@@ -17,7 +17,7 @@ void getInput(char *dest, int *i){
     dest[*i-j] = '\0';
 }
 
-void main ( int argc, char *argv[] ) {
+int main ( int argc, char *argv[] ) {
     printf("1");
     int i = 0;
     //int size = atoi(getenv("CONTENT_LENGTH"));
@@ -42,4 +42,5 @@ void main ( int argc, char *argv[] ) {
 	else{
 		printf("Maybe you should ponder over your word choice a little more");
 	}
+    return 0;
 }
