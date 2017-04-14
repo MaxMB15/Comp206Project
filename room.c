@@ -154,7 +154,7 @@ int main ( int argc, char *argv[] ) {
         printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
         printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
         printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
-        printf("                    <textarea form=\"poemText\" name=\"peom\" value=\"\"></textarea></br></br>\n");
+        printf("                    <textarea form=\"poemText\" name=\"poem\" value=\"\"></textarea></br></br>\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                    <input type=\"submit\"></input>\n");
         printf("                </form>\n");
@@ -177,7 +177,7 @@ int main ( int argc, char *argv[] ) {
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\"></input>\n");
         printf("                </form>\n");
         printf("                <form action=\"room.cgi\" method=\"POST\" id=\"west\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
