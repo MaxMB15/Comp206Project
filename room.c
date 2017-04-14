@@ -74,14 +74,14 @@ int main ( int argc, char *argv[] ) {
         printf("    <style>\n");
         printf("        @font-face {\n");
         printf("            font-family: Distant_Stroke;\n");
-        printf("            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n");
+        printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
         printf("        }\n");
         printf("        body {\n");
         printf("            height: 100%%;\n");
         printf("            margin: 0;\n");
         printf("            padding: 0;\n");
         printf("            background-color: #FFCC00;\n");
-        printf("            background: url(\"src/bg.jpg\");\n");
+        printf("            background: url(\"../src/bg.jpg\");\n");
         printf("            background-size: 100%% 100%%;\n");
         printf("            font-family: Distant_Stroke;\n");
         printf("            font-size: 30px;\n");
@@ -134,7 +134,7 @@ int main ( int argc, char *argv[] ) {
     printf("                <h1>\n");
     printf("                    <p><font color=\"white\">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>\n");
     printf("                </h1>\n");
-    printf("                <img src=\"src/room.jpg\" width=\"40%%\">\n");
+    printf("                <img src=\"../src/room.jpg\" width=\"40%%\">\n");
     
     //Error codes
     if(commandError == 1)
@@ -200,14 +200,14 @@ int main ( int argc, char *argv[] ) {
     printf("    <style>\n");
     printf("        @font-face {\n");
     printf("            font-family: Distant_Stroke;\n");
-    printf("            src: url(\"src/Distant_Stroke.otf\") format(\"opentype\");\n");
+    printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
     printf("        }\n");
     printf("        body {\n");
     printf("            height: 100%%;\n");
     printf("            margin: 0;\n");
     printf("            padding: 0;\n");
     printf("            background-color: #FFCC00;\n");
-    printf("            background: url(\"src/bg.jpg\");\n");
+    printf("            background: url(\"../src/bg.jpg\");\n");
     printf("            background-size: 100%% 100%%;\n");
     printf("            font-family: Distant_Stroke;\n");
     printf("            font-size: 30px;\n");
