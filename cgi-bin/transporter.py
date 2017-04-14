@@ -28,10 +28,10 @@ def transport():
         details = input_file.readlines()
         detailsLine1 = details[0]
         detailsLine1 = detailsLine1.replace(" ", "")
-        print detailsLine1
+        # print detailsLine1
         resources = detailsLine1.split(',')
         occupiedOrNot = int (resources[2])
-        print occupiedOrNot
+        # print occupiedOrNot
 
         if occupiedOrNot == 1:
             call([userUrl + "room.cgi"])
