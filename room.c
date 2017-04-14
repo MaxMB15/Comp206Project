@@ -161,17 +161,17 @@ int main ( int argc, char *argv[] ) {
     }
     else{
         printf("                <input type=\"submit\" form=\"north\" name=\"north\" value=\"North\"></input></br>\n");
-        printf("                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input>\n");
+        printf("                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input>\n");
         printf("                <input type=\"text\" form=\"text\" name=\"command\"></input>\n");
-        printf("                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input></br>\n");
+        printf("                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input></br>\n");
         printf("                <input type=\"submit\" form=\"south\" name=\"south\" value=\"South\"></input>\n");
         printf("                <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"north\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~rgao11/cgi-bin/transporter.py\" method=\"POST\" id=\"north\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/cgi-bin/room.html\"></input>\n");
         printf("                </form>\n");
         printf("                <form action=\"http://www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\" method=\"POST\" id=\"east\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
@@ -179,17 +179,17 @@ int main ( int argc, char *argv[] ) {
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
         printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/cgi-bin/room.html\"></input>\n");
         printf("                </form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"west\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~icoldr/cgi-bin/transporter.py\" method=\"POST\" id=\"west\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/cgi-bin/room.html\"></input>\n");
         printf("                </form>\n");
         printf("                <form action=\"room.cgi\" method=\"POST\" id=\"south\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/cgi-bin/room.html\"></input>\n");
         printf("                </form>\n");
     }
     
