@@ -1,0 +1,76 @@
+<html>
+    <title>We Love Poems!</title>
+    <body>
+        <center>
+            <div>
+                <h1>
+                    <p><font color="white">We Love Poems! Write down your best and we might give you Coins or Mana.</font></p>
+                </h1>
+                <!--PUT THIS IN:-->
+                <img src="src/room.jpg" width="40%">
+                <h1></h1>
+                <input type="submit" form="north" name="north" value="North"></input></br>
+                <input type="submit" form="east" name="east" value="East"></input>
+                <input type="text" form="text" name="command"></input>
+                <input type="submit" form="west" name="west" value="West"></input></br>
+                <input type="submit" form="south" name="south" value="South"></input>
+                    <!--teleport should edit this in:-->
+                <input type="hidden" name="inve" value="6,6"></input>
+                <form action="cgi-bin/room.cgi" method="POST" id="text"></form>
+                <form action="cgi-bin/room.cgi" method="POST" id="north">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inventory" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+                <form action="cgi-bin/room.cgi" method="POST" id="east">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inventory" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py"></input>
+                </form>
+                <form action="cgi-bin/room.cgi" method="POST" id="west">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inventory" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+                <form action="cgi-bin/room.cgi" method="POST" id="south">
+                        <!--teleport should edit this in:-->
+                    <input type="hidden" name="inventory" value="6,6"></input>
+                                    <!--edit this to the other sites transporter.py file:-->
+                    <input type="hidden" name="url" value="http://blank"></input>
+                </form>
+            </div>
+        </center>
+    </body>
+    <style>
+        @font-face {
+            font-family: Distant_Stroke;
+            src: url("src/Distant_Stroke.otf") format("opentype");
+        }
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FFCC00;
+            background: url("src/bg.jpg");
+            background-size: 100% 100%;
+            font-family: Distant_Stroke;
+            font-size: 30px;
+        }
+        input[type=submit] {
+            width: 20%;  height: 10%;
+            font-family: Distant_Stroke;
+            font-size: 40px;
+            text-align: center;
+        }
+        input[type=text] {
+            padding: 0px;
+            width: 20%;  height: 7%;
+            font-family: Distant_Stroke;
+            font-size: 40px;
+            text-align: center;
+        }
+    </style>
+</html>
