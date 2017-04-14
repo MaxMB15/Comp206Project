@@ -94,94 +94,88 @@ int main ( int argc, char *argv[] ) {
 	int playerGold = 0;
 	getInv(inv, &playerMana, &playerGold);
 	
-	if(!strcmp("3a14159q165", poem)){
+	if(!strcmp("3a14159q165", poem)){//meaning they have won our game
 		printf("Content-Type:text/html\n\n");
         	printf("<html>\n");
         	printf("    <title>We Love Poems!</title>\n");
         	printf("    <body>\n");
         	printf("        <center>\n");
         	printf("            <div>\n");
-        	printf("                <h1>\n");
-        	printf("                    <p><font color=\"white\">Congratulations, you have won the game!</font></p>\n");
-        	printf("                </h1>\n");
 		char *temp = (char*)(malloc(size));
 		getInput(input,temp,&i);
 		int tempPlayerMana = atoi(temp);
 		int a = 0;
+		int b = 0;
 		if(tempPlayerMana>roomMana){
 			a++;
-			printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"mana\" type=\"text\" name=\"mana\"><input value=\"gold\" type=\"text\" name=\"gold\"></br><input value=\"submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+			b++;
 		}
 		getInput(input,temp,&i);
 		int tempPlayerGold =atoi(temp);
 		if(tempPlayerGold > roomGold && a==0){
-			printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"mana\" type=\"text\" name=\"mana\"><input value=\"gold\" type=\"text\" name=\"gold\"></br><input value=\"submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+			b++;
 		}
-		else if(tempPlayerMana + tempPlayerGold > 5 || tempPlayerMana < 0 || tempPlayerGold < 0){
-			printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"mana\" type=\"text\" name=\"mana\"><input value=\"gold\" type=\"text\" name=\"gold\"></br><input value=\"submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+		else if(a == 0 && (tempPlayerMana + tempPlayerGold > 5 || tempPlayerMana < 0 || tempPlayerGold < 0)){
+			b++;		
 		}
+		if(b>0){
+		printf("                <h1>\n");
+        	printf("                    <p><font color=\"white\">Please enter a valid amount</font></p>\n");
+        	printf("                </h1>\n");
+		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+		}
+		if(playerGold>100){
+        	printf("                <h1>\n");
+        	printf("                    <p><font color=\"white\">Congratulations, you have won the game!</font></p>\n");
+        	printf("                </h1>\n");
+		}
+		else if (b==0){
 		printf("                <h2>\n");
-		printf("                    <p><font color=\"white\">You have %d gold, and %d manna. Our room has %d gold, and %d manna.</font></p>\n", playerGold, playerMana, roomGold, roomMana);
+		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana+tempPlayerMana, playerGold+tempPlayerGold , roomMana-tempPlayerMana , roomGold-tempPlayerGold);
 		printf("                </h2>\n");
+		printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Home page\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana+tempPlayerMana , playerGold+tempPlayerGold);
+		}
+		else{
+		printf("                <h2>\n");
+		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana, playerGold, roomMana, roomGold);
+		printf("                </h2>\n");
+		}
         	printf("            </div>\n");
         	printf("        </center>\n");
         	printf("    </body>\n");
         	printf("    <style>\n");
-        	printf("        @font-face {\n");
-        	printf("            font-family: Distant_Stroke;\n");
-        	printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
-        	printf("        }\n");
-        	printf("        body {\n");
-        	printf("            height: 100%%;\n");
-        	printf("            margin: 0;\n");
-        	printf("            padding: 0;\n");
-        	printf("            background-color: #FFCC00;\n");
-        	printf("            background: url(\"../src/bg.jpg\");\n");
-        	printf("            background-size: 100%% 100%%;\n");
-        	printf("            font-family: Distant_Stroke;\n");
-        	printf("            font-size: 30px;\n");
-        	printf("        }\n");
-        	printf("    </style>\n");
+		printf("        @font-face {\n");
+		printf("            font-family: Distant_Stroke;\n");
+		printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
+		printf("        }\n");
+		printf("        body {\n");
+		printf("            height: 100%%;\n");
+		printf("            margin: 0;\n");
+		printf("            padding: 0;\n");
+		printf("            background-color: #FFCC00;\n");
+		printf("            background: url(\"../src/bg.jpg\");\n");
+		printf("            background-size: 100%% 100%%;\n");
+		printf("            font-family: Distant_Stroke;\n");
+		printf("            font-size: 30px;\n");
+		printf("        }\n");
+		printf("        input[type=submit] {\n");
+		printf("            width: 20%%;  height: 10%%;\n");
+		printf("            font-family: Distant_Stroke;\n");
+		printf("            font-size: 40px;\n");
+		printf("            text-align: center;\n");
+		printf("        }\n");
+		printf("        input[type=text] {\n");
+		printf("            padding: 0px;\n");
+		printf("            width: 20%%;  height: 7%%;\n");
+		printf("            font-family: Distant_Stroke;\n");
+		printf("            font-size: 40px;\n");
+		printf("            text-align: center;\n");
+		printf("        }\n");        printf("    </style>\n");
+
         	printf("</html>\n");
 		return 0;
 	}
 	
-	if(playerGold >= 100){        
-        	printf("Content-Type:text/html\n\n");
-        	printf("<html>\n");
-        	printf("    <title>We Love Poems!</title>\n");
-        	printf("    <body>\n");
-        	printf("        <center>\n");
-        	printf("            <div>\n");
-        	printf("                <h1>\n");
-        	printf("                    <p><font color=\"white\">Congratulations, you have won the game!</font></p>\n");
-        	printf("                </h1>\n");
-		printf("                <h2>\n");
-		printf("                    <p><font color=\"white\">You have %d gold, and %d manna. Our room has %d gold, and %d manna.</font></p>\n", playerGold, playerMana, roomGold, roomMana);
-		printf("                </h2>\n");
-        	printf("            </div>\n");
-        	printf("        </center>\n");
-        	printf("    </body>\n");
-        	printf("    <style>\n");
-        	printf("        @font-face {\n");
-        	printf("            font-family: Distant_Stroke;\n");
-        	printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
-        	printf("        }\n");
-        	printf("        body {\n");
-        	printf("            height: 100%%;\n");
-        	printf("            margin: 0;\n");
-        	printf("            padding: 0;\n");
-        	printf("            background-color: #FFCC00;\n");
-        	printf("            background: url(\"../src/bg.jpg\");\n");
-        	printf("            background-size: 100%% 100%%;\n");
-        	printf("            font-family: Distant_Stroke;\n");
-        	printf("            font-size: 30px;\n");
-        	printf("        }\n");
-        	printf("    </style>\n");
-        	printf("</html>\n");
-		return 0;
-	}
-
 	time_t t;
   	// Intializes random number generator 
    	srand((unsigned) time(&t));
@@ -210,46 +204,50 @@ int main ( int argc, char *argv[] ) {
 	}
 	else if ((strstr(poem, "rose") != NULL)||(strstr(poem, "violet") != NULL)||(strstr(poem, "flower") != NULL)) {
 		printf("                    <p><font color=\"white\">We love flowers! Well written!</font></p>\n");
-		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"mana\" type=\"text\" name=\"mana\"><input value=\"gold\" type=\"text\" name=\"gold\"></br><input value=\"submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana, playerGold, roomMana, roomGold);
+		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
 	}
 	else if (r == 1){
         	printf("                    <p><font color=\"white\">That was... truly beautiful! Take all your the amount of gold or mana you want!</font></p>\n");
+		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana, playerGold, roomMana, roomGold);
+		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
 	}
 	else{
-        printf("                    <p><font color=\"white\">Maybe you should ponder over your word choice a little more</font></p>\n");
+	printf("                    <p><font color=\"white\">Maybe you should ponder over your word choice a little more</font></p>\n");
+	printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Try again\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana, playerGold);
 	}
         printf("                </h1>\n");
         printf("            </div>\n");
         printf("        </center>\n");
         printf("    </body>\n");
         printf("    <style>\n");
-    printf("        @font-face {\n");
-    printf("            font-family: Distant_Stroke;\n");
-    printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
-    printf("        }\n");
-    printf("        body {\n");
-    printf("            height: 100%%;\n");
-    printf("            margin: 0;\n");
-    printf("            padding: 0;\n");
-    printf("            background-color: #FFCC00;\n");
-    printf("            background: url(\"../src/bg.jpg\");\n");
-    printf("            background-size: 100%% 100%%;\n");
-    printf("            font-family: Distant_Stroke;\n");
-    printf("            font-size: 30px;\n");
-    printf("        }\n");
-    printf("        input[type=submit] {\n");
-    printf("            width: 20%%;  height: 10%%;\n");
-    printf("            font-family: Distant_Stroke;\n");
-    printf("            font-size: 40px;\n");
-    printf("            text-align: center;\n");
-    printf("        }\n");
-    printf("        input[type=text] {\n");
-    printf("            padding: 0px;\n");
-    printf("            width: 20%%;  height: 7%%;\n");
-    printf("            font-family: Distant_Stroke;\n");
-    printf("            font-size: 40px;\n");
-    printf("            text-align: center;\n");
-    printf("        }\n");        printf("    </style>\n");
+	printf("        @font-face {\n");
+	printf("            font-family: Distant_Stroke;\n");
+	printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
+	printf("        }\n");
+	printf("        body {\n");
+	printf("            height: 100%%;\n");
+	printf("            margin: 0;\n");
+	printf("            padding: 0;\n");
+	printf("            background-color: #FFCC00;\n");
+	printf("            background: url(\"../src/bg.jpg\");\n");
+	printf("            background-size: 100%% 100%%;\n");
+	printf("            font-family: Distant_Stroke;\n");
+	printf("            font-size: 30px;\n");
+	printf("        }\n");
+	printf("        input[type=submit] {\n");
+	printf("            width: 20%%;  height: 10%%;\n");
+	printf("            font-family: Distant_Stroke;\n");
+	printf("            font-size: 40px;\n");
+	printf("            text-align: center;\n");
+	printf("        }\n");
+	printf("        input[type=text] {\n");
+	printf("            padding: 0px;\n");
+	printf("            width: 20%%;  height: 7%%;\n");
+	printf("            font-family: Distant_Stroke;\n");
+	printf("            font-size: 40px;\n");
+	printf("            text-align: center;\n");
+	printf("        }\n");        printf("    </style>\n");
         printf("</html>\n");
     return 0;
 }
