@@ -197,8 +197,7 @@ int main ( int argc, char *argv[] ) {
     
     //play game code
     if(code == 1){
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
-        printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
+        printf("                <form action=\"room.cgi\" method=\"GET\" id=\"text\"><input type=\"text\" name=\"inp\"></input><input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input></form>",playerMana, playerGold);
         printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
         printf("                    <textarea form=\"poemText\" name=\"poem\" value=\"\"></textarea></br></br>\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
