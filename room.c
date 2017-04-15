@@ -49,12 +49,60 @@ int main ( int argc, char *argv[] ) {
     //game char is i
     char location = getFromLoc(input);
     if(location=='i'){
-        strcpy(command, "PLAY");
-        commandError = 1;
+        if(!strcmp(command,"QUIT")){
+            strcpy(command, "REFRESH");
+        }
+        else{
+            strcpy(command, "PLAY");
+            commandError = 1;
+        }
+    }
+    
+    int code = 0;
+    if(!strcmp(command,"JOIN")){
+        playerMana--;
+        roomMana++;
+        if(playerMana<=0){
+            resources = fopen("resources.csv", "w");
+            fprintf(resources,"%d,%d,0",roomMana, roomGold);
+            fclose(resources);
+            
+            printf("Content-Type:text/html\n\n");
+            printf("<html>\n");
+            printf("    <title>We Love Poems!</title>\n");
+            printf("    <body>\n");
+            printf("        <center>\n");
+            printf("            <div>\n");
+            printf("                <h1>\n");
+            printf("                    <p><font color=\"white\">Sorry! You do not have enough mana.</font></p>\n");
+            printf("                </h1>\n");
+            printf("            </div>\n");
+            printf("        </center>\n");
+            printf("    </body>\n");
+            printf("    <style>\n");
+            printf("        @font-face {\n");
+            printf("            font-family: Distant_Stroke;\n");
+            printf("            src: url(\"../src/Distant_Stroke.otf\") format(\"opentype\");\n");
+            printf("        }\n");
+            printf("        body {\n");
+            printf("            height: 100%%;\n");
+            printf("            margin: 0;\n");
+            printf("            padding: 0;\n");
+            printf("            background-color: #FFCC00;\n");
+            printf("            background: url(\"../src/bg.jpg\");\n");
+            printf("            background-size: 100%% 100%%;\n");
+            printf("            font-family: Distant_Stroke;\n");
+            printf("            font-size: 30px;\n");
+            printf("        }\n");
+            printf("    </style>\n");
+            printf("</html>\n");
+            return 0;
+        }
+        code = 2;
     }
     
     //Handle commands
-    if(!strcmp(command,"EXIT")){
+    else if(!strcmp(command,"EXIT")){
         resources = fopen("resources.csv", "w");
         fprintf(resources,"%d,%d,0",roomMana, roomGold);
         fclose(resources);
@@ -90,12 +138,11 @@ int main ( int argc, char *argv[] ) {
         printf("</html>\n");
         return 0;
     }
-    
-    int code = 0;
-    if(!strcmp(command,"PLAY")){
+    else if(!strcmp(command,"PLAY")){
         code = 1;
         
-    }else if(!strcmp(command,"REFRESH")){
+    }
+    else if(!strcmp(command,"REFRESH")){
         code = 2;
         
     }else if(!beginsWith("DROP+",command)){
@@ -151,7 +198,7 @@ int main ( int argc, char *argv[] ) {
     
     //play game code
     if(code == 1){
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
+        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"inp\"></form>\n");
         printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
         printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
         printf("                    <textarea form=\"poemText\" name=\"poem\" value=\"\"></textarea></br></br>\n");
@@ -346,6 +393,3 @@ int isNum(char *src){
     }
     return 0;
 }
-
-
-
