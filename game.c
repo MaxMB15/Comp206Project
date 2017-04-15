@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 
+//Gets the input and puts into dest
 void getInput(char *src, char *dest, int *i){
     char c = ' ';
     //cut everything out until "="
@@ -20,6 +21,7 @@ void getInput(char *src, char *dest, int *i){
     dest[*i-j] = '\0';
 }
 
+//Gets inventory
 void getInv(char *data, int *mana, int *gold){
     //parse through data
     char *buffer = (char *)(malloc(20));
@@ -59,6 +61,7 @@ void getInv(char *data, int *mana, int *gold){
     
 }
 
+//Checks if char is an integer
 int isNum(char *src){
     int i;
     for(i=0;i<strlen(src);i++){
@@ -78,8 +81,7 @@ int main ( int argc, char *argv[] ) {
 	fclose(resources);
 	getInv(roomResources, &roomMana, &roomGold);
 
-	int size = atoi(getenv("CONTENT_LENGTH"));
-	printf("1");
+	int size = atoi(getenv("CONTENT_LENGTH")); //Gets size of input
 	
 	//Read input
 	char* input = (char*)(malloc(size));
@@ -98,7 +100,7 @@ int main ( int argc, char *argv[] ) {
 	int playerGold = 0;
 	getInv(inv, &playerMana, &playerGold);
 	
-	if(!strcmp("3a14159q165", poem)){ //meaning they have won our game
+	if(!strcmp("3a141qfsdasx3hfdg3259q165", poem)){ //meaning they have won our game
 		printf("Content-Type:text/html\n\n");
         	printf("<html>\n");
         	printf("    <title>We Love Poems!</title>\n");
@@ -106,34 +108,34 @@ int main ( int argc, char *argv[] ) {
         	printf("        <center>\n");
         	printf("            <div>\n");
 		char *temp = (char*)(malloc(size));
-		getInput(input,temp,&i);
-		int tempPlayerMana = atoi(temp);
+		getInput(input,temp,&i); //Gets the manna the player entered
+		int tempPlayerMana = atoi(temp); 
 		int a = 0;
 		int b = 0;
-		if(tempPlayerMana>roomMana||isNum(temp)){
+		if(tempPlayerMana>roomMana||isNum(temp)){ //Checks if wanted manna is valid
 			a++;
 			b++;
 		}
 		getInput(input,temp,&i);
-		int tempPlayerGold =atoi(temp);
-		if((tempPlayerGold > roomGold && a==0)||isNum(temp)){
+		int tempPlayerGold =atoi(temp); ////Gets the gold the player entered
+		if((tempPlayerGold > roomGold && a==0)||isNum(temp)){ //Checks if wanted gold is valid
 			b++;
 		}
-		else if(a == 0 && (tempPlayerMana + tempPlayerGold > 5 || tempPlayerMana < 0 || tempPlayerGold < 0)){
+		else if(a == 0 && (tempPlayerMana + tempPlayerGold > 5 || tempPlayerMana < 0 || tempPlayerGold < 0)){ //Checks if the values are positive and are not more than 5
 			b++;		
 		}
-		if(b>0){
+		if(b>0){ //The format was not correct
 			printf("                <h1>\n");
         		printf("                    <p><font color=\"white\">Please enter a valid amount</font></p>\n");
         		printf("                </h1>\n");
-			printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+			printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a141qfsdasx3hfdg3259q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
 		}
-		if(playerGold>100){
+		if(playerGold>100){ //Means the player has won
         		printf("                <h1>\n");
         		printf("                    <p><font color=\"white\">Congratulations, you have won the game!</font></p>\n");
         		printf("                </h1>\n");
 		}
-		else if (b==0){
+		else if (b==0){ 
 			printf("                <h2>\n");
 			printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana+tempPlayerMana, playerGold+tempPlayerGold , roomMana-tempPlayerMana , roomGold-tempPlayerGold);
 			printf("                </h2>\n");
@@ -178,7 +180,6 @@ int main ( int argc, char *argv[] ) {
 		printf("            font-size: 40px;\n");
 		printf("            text-align: center;\n");
 		printf("        }\n");        printf("    </style>\n");
-
         	printf("</html>\n");
 		return 0;
 	}
@@ -201,25 +202,25 @@ int main ( int argc, char *argv[] ) {
         printf("                </h2>\n");
         printf("                <h1>\n");
 
-	if ( poemLength <= 10 ) {
+	if ( poemLength <= 10 ) { //Poem is too short
 		printf("                    <p><font color=\"white\">Although we do believe in consiseness, there is a limit to how short a beautiful poem can be.</font></p>\n");
 		printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Try again\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana, playerGold);
 	}
-	else if (poemLength >250) {
+	else if (poemLength >250) { //Poem is too long
 		printf("                    <p><font color=\"white\">We do believe in consiseness, there is a limit to how long a beautiful poem can be.</font></p>\n");
 		printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Try again\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana, playerGold);
 	}
-	else if ((strstr(poem, "rose") != NULL)||(strstr(poem, "violet") != NULL)||(strstr(poem, "flower") != NULL)) {
+	else if ((strstr(poem, "rose") != NULL)||(strstr(poem, "violet") != NULL)||(strstr(poem, "flower") != NULL)) { //Poem contains flowers!!
 		printf("                    <p><font color=\"white\">We love flowers! Well written!</font></p>\n");
 		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana, playerGold, roomMana, roomGold);
-		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a141qfsdasx3hfdg3259q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
 	}
-	else if (r == 1){
+	else if (r == 1){ //Random number generator thinks it is a good poem
         	printf("                    <p><font color=\"white\">That was... truly beautiful! Take all your the amount of gold or mana you want!</font></p>\n");
 		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana, playerGold, roomMana, roomGold);
-		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a14159q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
+		printf("			<form action=\"game.cgi\" method=\"POST\"><input value=\"3a141qfsdasx3hfdg3259q165\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"><input value=\"Manna\" type=\"text\" name=\"mana\"><input value=\"Gold\" type=\"text\" name=\"gold\"></br><input value=\"Submit\" type=\"submit\" name=\"submit\"></form>",playerMana, playerGold);
 	}
-	else{
+	else{ //Not a good poem, asks to try again
 		printf("                    <p><font color=\"white\">Maybe you should ponder over your word choice a little more</font></p>\n");
 		printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Try again\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana, playerGold);
 	}
