@@ -23,8 +23,8 @@ int main ( int argc, char *argv[] ) {
     getInv(roomResources, &roomMana, &roomGold);
     
     //size of content given by web page
-    //int size = atoi(getenv("CONTENT_LENGTH"));
-    int size = 50;
+    int size = atoi(getenv("CONTENT_LENGTH"));
+
     //Get data
     char* input = (char*)(malloc(size));
     scanf("%s",input);
@@ -64,7 +64,7 @@ int main ( int argc, char *argv[] ) {
         roomMana++;
         if(playerMana<=0){
             resources = fopen("resources.csv", "w");
-            fprintf(resources,"%d,%d,1",roomMana, roomGold);
+            fprintf(resources,"%d,%d,0",roomMana, roomGold);
             fclose(resources);
             
             printf("Content-Type:text/html\n\n");
@@ -98,6 +98,9 @@ int main ( int argc, char *argv[] ) {
             printf("</html>\n");
             return 0;
         }
+        resources = fopen("resources.csv", "w");
+        fprintf(resources,"%d,%d,1",roomMana, roomGold);
+        fclose(resources);
         code = 2;
     }
     
