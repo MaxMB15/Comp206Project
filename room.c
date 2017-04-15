@@ -10,6 +10,7 @@ int beginsWith(char *begin, char *str);
 void getInput(char *src, char *dest, int *i);
 void strcut(char *src, char *dest, int cutPlace);
 int isNum(char *src);
+int contains(char *src, char *comp);
 
 int main ( int argc, char *argv[] ) {
     //get room resources
@@ -44,10 +45,7 @@ int main ( int argc, char *argv[] ) {
     getInv(inv, &playerMana, &playerGold);
     
     //Make sure location comes from room page
-    //normal char is c
-    //game char is i
-    char location = getFromLoc(input);
-    if(location=='i'){
+    if(contains(input,"inp=")){
         if(!strcmp(command,"QUIT")){
             strcpy(command, "REFRESH");
         }
@@ -301,6 +299,26 @@ char getFromLoc(char *data){
         }
     }
     return '\n';
+}
+int contains(char *src, char *comp){
+    int i, y, z = 0;
+    for(i = 0;i<strlen(src)-strlen(comp);i++){
+        if(src[i]==comp[0]){
+            for(y = 1; y<strlen(comp);y++){
+                if(src[i+y]!=comp[y]){
+                    z=1;
+                    break;
+                }
+            }
+            if(!z){
+                return 1;
+            }
+            else{
+                z=0;
+            }
+        }
+    }
+    return 0;
 }
 void getInv(char *data, int *mana, int *gold){
     //parse through data
