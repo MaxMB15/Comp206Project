@@ -22,8 +22,7 @@ int main ( int argc, char *argv[] ) {
     getInv(roomResources, &roomMana, &roomGold);
     
     //size of content given by web page
-    //int size = atoi(getenv("CONTENT_LENGTH"));
-    int size = 50;
+    int size = atoi(getenv("CONTENT_LENGTH"));
     //Get data
     char* input = (char*)(malloc(size));
     scanf("%s",input);
@@ -198,7 +197,7 @@ int main ( int argc, char *argv[] ) {
     
     //play game code
     if(code == 1){
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"inp\"></form>\n");
+        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
         printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
         printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
         printf("                    <textarea form=\"poemText\" name=\"poem\" value=\"\"></textarea></br></br>\n");
