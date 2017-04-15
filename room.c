@@ -66,7 +66,7 @@ int main ( int argc, char *argv[] ) {
         printf("        <center>\n");
         printf("            <div>\n");
         printf("                <h1>\n");
-        printf("                    <p><font color=\"white\">We are sorry that you wanted to leave.</font></p>\n");
+        printf("                    <p><font color=\"white\">We are sorry for your loss.</font></p>\n");
         printf("                </h1>\n");
         printf("            </div>\n");
         printf("        </center>\n");
@@ -151,46 +151,45 @@ int main ( int argc, char *argv[] ) {
     
     //play game code
     if(code == 1){
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"inp\"></form>\n");
-        printf("                <input type=\"text\" form=\"inp\" name=\"text\"></input>\n");
-        printf("                <input type=\"hidden\" form=\"inp\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
+        printf("                <input type=\"text\" form=\"text\" name=\"inp\"></input>\n");
         printf("                <form action=\"game.cgi\" method=\"POST\" id=\"poemText\">\n");
         printf("                    <textarea form=\"poemText\" name=\"poem\" value=\"\"></textarea></br></br>\n");
-        printf("                    <input form=\"poemText\" type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
-        printf("                    <input form=\"poemText\" type=\"submit\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
+        printf("                    <input type=\"submit\"></input>\n");
         printf("                </form>\n");
     }
     else{
         printf("                <input type=\"submit\" form=\"north\" name=\"north\" value=\"North\"></input></br>\n");
-        printf("                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input>\n");
+        printf("                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input>\n");
         printf("                <input type=\"text\" form=\"text\" name=\"command\"></input>\n");
-        printf("                <input type=\"submit\" form=\"west\" name=\"west\" value=\"West\"></input></br>\n");
+        printf("                <input type=\"submit\" form=\"east\" name=\"east\" value=\"East\"></input></br>\n");
         printf("                <input type=\"submit\" form=\"south\" name=\"south\" value=\"South\"></input>\n");
         printf("                <input type=\"hidden\" form=\"text\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                <form action=\"room.cgi\" method=\"POST\" id=\"text\"></form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"north\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~icoldr/cgi-bin/transporter.py\" method=\"POST\" id=\"north\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/room.html\"></input>\n");
         printf("                </form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"east\">\n");
+        printf("                <form action=\"http://.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\" method=\"POST\" id=\"east\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/room.html\"></input>\n");
         printf("                </form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"west\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~rgao11/cgi-bin/transporter.py\" method=\"POST\" id=\"west\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/room.html\"></input>\n");
         printf("                </form>\n");
-        printf("                <form action=\"room.cgi\" method=\"POST\" id=\"south\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~tspark1/cgi-bin/transporter.py\" method=\"POST\" id=\"south\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
-        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://blank\"></input>\n");
+        printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/room.html\"></input>\n");
         printf("                </form>\n");
     }
     

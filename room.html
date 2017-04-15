@@ -10,36 +10,36 @@
                 <img src="src/room.jpg" width="40%">
                 <h1></h1>
                 <input type="submit" form="north" name="north" value="North"></input></br>
-                <input type="submit" form="east" name="east" value="East"></input>
+                <input type="submit" form="west" name="west" value="West"></input>
                 <input type="text" form="text" name="command"></input>
-                <input type="submit" form="west" name="west" value="West"></input></br>
+                <input type="submit" form="east" name="east" value="East"></input></br>
                 <input type="submit" form="south" name="south" value="South"></input>
                     <!--teleport should edit this in:-->
                 <input type="hidden" form="text" name="inventory" value="6,6"></input>
                 <form action="cgi-bin/room.cgi" method="POST" id="text"></form>
-                <form action="cgi-bin/room.cgi" method="POST" id="north">
+                <form action="http://cs.mcgill.ca/~icoldr/cgi-bin/transporter.py" method="POST" id="north">
                         <!--teleport should edit this in:-->
                     <input type="hidden" name="inventory" value="6,6"></input>
                                     <!--edit this to the other sites transporter.py file:-->
-                    <input type="hidden" name="url" value="http://blank"></input>
+                    <input type="hidden" name="url" value="http://cs.mcgill.ca/~mrunds/room.html"></input>
                 </form>
-                <form action="cgi-bin/room.cgi" method="POST" id="east">
+                <form action="http://.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py" method="POST" id="east">
                         <!--teleport should edit this in:-->
                     <input type="hidden" name="inventory" value="6,6"></input>
                                     <!--edit this to the other sites transporter.py file:-->
-                    <input type="hidden" name="url" value="http://www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py"></input>
+                    <input type="hidden" name="url" value="http://cs.mcgill.ca/~mrunds/room.html"></input>
                 </form>
-                <form action="cgi-bin/room.cgi" method="POST" id="west">
+                <form action="http://cs.mcgill.ca/~rgao11/cgi-bin/transporter.py" method="POST" id="west">
                         <!--teleport should edit this in:-->
                     <input type="hidden" name="inventory" value="6,6"></input>
                                     <!--edit this to the other sites transporter.py file:-->
-                    <input type="hidden" name="url" value="http://blank"></input>
+                    <input type="hidden" name="url" value="http://cs.mcgill.ca/~mrunds/room.html"></input>
                 </form>
-                <form action="cgi-bin/room.cgi" method="POST" id="south">
+                <form action="http://cs.mcgill.ca/~tspark1/cgi-bin/transporter.py" method="POST" id="south">
                         <!--teleport should edit this in:-->
                     <input type="hidden" name="inventory" value="6,6"></input>
                                     <!--edit this to the other sites transporter.py file:-->
-                    <input type="hidden" name="url" value="http://blank"></input>
+                    <input type="hidden" name="url" value="http://cs.mcgill.ca/~mrunds/room.html"></input>
                 </form>
             </div>
         </center>

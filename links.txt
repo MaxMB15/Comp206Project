@@ -1,4 +1,4 @@
-Pierre: cs.mcgill.ca/~icoldr/cgi-bin/transporter.py
-Leila: www.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py
+Pierre: http://cs.mcgill.ca/~icoldr/cgi-bin/transporter.py
+Leila: http://.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py
 Some random Richard Gao: http://cs.mcgill.ca/~rgao11/cgi-bin/transporter.py
-Some random: http://www.cs.mcgill.ca/~tspark1/cgi-bin/transporter.py
+Some random: http://cs.mcgill.ca/~tspark1/cgi-bin/transporter.py
