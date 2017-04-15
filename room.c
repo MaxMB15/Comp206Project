@@ -61,7 +61,7 @@ int main ( int argc, char *argv[] ) {
         roomMana++;
         if(playerMana<=0){
             resources = fopen("resources.csv", "w");
-            fprintf(resources,"%d,%d,0",roomMana, roomGold);
+            fprintf(resources,"%d,%d,1",roomMana, roomGold);
             fclose(resources);
             
             printf("Content-Type:text/html\n\n");
