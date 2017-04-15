@@ -78,7 +78,7 @@ int main ( int argc, char *argv[] ) {
 	scanf("%s",input);
 	printf("1");
 	//printf("%s", input);
-
+	
 	int i = 0;
 	char *poem = (char*)malloc(size);
 	getInput(input, poem, &i);
@@ -133,6 +133,9 @@ int main ( int argc, char *argv[] ) {
 		printf("                <h2>\n");
 		printf("                    <p><font color=\"white\">You have %d manna, and %d gold. Our room has %d manna, and %d gold.</font></p>\n", playerMana+tempPlayerMana, playerGold+tempPlayerGold , roomMana-tempPlayerMana , roomGold-tempPlayerGold);
 		printf("                </h2>\n");
+		FILE *write = fopen("resources.csv", "w");
+		fprintf(write, "%d,%d,1", roomMana-tempPlayerMana, roomGold-tempPlayerGold);
+		fclose(write);
 		printf("			<form action=\"room.cgi\" method=\"POST\"><input value=\"Home page\" type=\"submit\"><input value=\"Play\" type=\"hidden\" name=\"command\"><input value=\"%d,%d\" type=\"hidden\" name=\"inventory\"></form>",playerMana+tempPlayerMana , playerGold+tempPlayerGold);
 		}
 		else{
