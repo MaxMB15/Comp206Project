@@ -1,18 +1,19 @@
 import cgi, cgitb, urllib2
 
 def success():
-    # resourcesLoc = "http://cs.mcgill.ca/~mrunds/Game/resources.csv"
     resourcesLoc = './resources.csv'
-    # input_file = urllib2.urlopen(resourcesLoc)
     try:
+        """ we open the resources file and
+            extract the numbers stored in it.
+            we overwrite the file and change the 
+            1 at the end, which denotes occupied, 
+            to 0 (not occupied) """
         input_file = open(resourcesLoc, "r")
         details = input_file.readlines()
         detailsLine1 = details[0]
         detailsLine1 = detailsLine1.replace(" ", "")
-        # print detailsLine1
         resources = detailsLine1.split(',')
         output_file = open(resourcesLoc, "w")
-        # output_file.write("hello")
         output_file.write(resources[0] + "," + resources[1] + "," + '0')
     
     except IOError:
