@@ -173,7 +173,7 @@ int main ( int argc, char *argv[] ) {
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
         printf("                    <input type=\"hidden\" name=\"url\" value=\"http://cs.mcgill.ca/~mrunds/room.html\"></input>\n");
         printf("                </form>\n");
-        printf("                <form action=\"http://.cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\" method=\"POST\" id=\"east\">\n");
+        printf("                <form action=\"http://cs.mcgill.ca/~lerbay/cgi-bin/transporter.py\" method=\"POST\" id=\"east\">\n");
         printf("                        <!--teleport should edit this in:-->\n");
         printf("                    <input type=\"hidden\" name=\"inventory\" value=\"%d,%d\"></input>\n",playerMana, playerGold);
         printf("                                    <!--edit this to the other sites transporter.py file:-->\n");
