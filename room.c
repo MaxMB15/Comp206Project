@@ -23,7 +23,8 @@ int main ( int argc, char *argv[] ) {
     getInv(roomResources, &roomMana, &roomGold);
     
     //size of content given by web page
-    int size = atoi(getenv("CONTENT_LENGTH"));
+    //int size = atoi(getenv("CONTENT_LENGTH"));
+    int size = 50;
     //Get data
     char* input = (char*)(malloc(size));
     scanf("%s",input);
@@ -45,6 +46,8 @@ int main ( int argc, char *argv[] ) {
     getInv(inv, &playerMana, &playerGold);
     
     //Make sure location comes from room page
+    //normal char is c
+    //game char is i
     if(contains(input,"inp=")){
         if(!strcmp(command,"QUIT")){
             strcpy(command, "REFRESH");
@@ -182,15 +185,15 @@ int main ( int argc, char *argv[] ) {
     
     //Error codes
     if(commandError == 1)
-        printf("                <h1>This is an invalid command.</h1>\n");
+        printf("                <h1><font color=\"white\">This is an invalid command.</font></h1>\n");
     else if(commandError == 2)
-        printf("                <h1>Drop number not valid.</h1>\n");
+        printf("                <h1><font color=\"white\">Drop number not valid.</font></h1>\n");
     else if(commandError == 5)
-        printf("                <h1>Not enough gold to drop.</h1>\n");
+        printf("                <h1><font color=\"white\">Not enough gold to drop.</font></h1>\n");
     else if(code == 4)
-        printf("                <h1>You now have %d manna and %d gold.</h1>\n",playerMana, playerGold);
+        printf("                <h1><font color=\"white\">You now have %d manna and %d gold.</font></h1>\n",playerMana, playerGold);
     else
-        printf("                <h1></h1>\n");
+        printf("                <h1><font color=\"white\"></font></h1>\n");
     
     
     //play game code
